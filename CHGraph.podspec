@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
                    Uses Core Graphics Framework
                    DESC
 
-  s.homepage     = "https://bitbucket.org/OlegChulakovStudio/chgraph"
+  s.homepage     = "https://github.com/andreykorolenko/CHGraph"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -72,7 +72,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://andreykorolenko@bitbucket.org/OlegChulakovStudio/chgraph.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/andreykorolenko/CHGraph", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
