@@ -16,14 +16,14 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CHGraph"
-  s.version      = "0.0.9"
+  s.version      = "0.0.10"
   s.summary      = "Library to create graphs."
 
   s.description  = <<-DESC
                    Uses Core Graphics Framework
                    DESC
 
-  s.homepage     = "https://github.com/andreykorolenko/CHGraph"
+  s.homepage     = "https://github.com/andreykorolenko/CHGraph.git"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -72,7 +72,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/andreykorolenko/CHGraph", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/andreykorolenko/CHGraph.git", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
