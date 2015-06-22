@@ -450,27 +450,19 @@ static dispatch_once_t *once_token_debug;
 #pragma mark - Date Formatter
 
 - (NSString *)shortStringMonthFromDate:(NSDate *)date {
-    static dispatch_once_t onceToken;
-    once_token_debug = &onceToken;
-    dispatch_once(&onceToken, ^{
-        self.dateFormatter = [NSDateFormatter new];
-    });
-    [self.dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    [self.dateFormatter setDateFormat:@"MMMM"];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatter setDateFormat:@"MMMM"];
     
-    NSString *nameOfMonth = [[self.dateFormatter stringFromDate:date] lowercaseString];
+    NSString *nameOfMonth = [[dateFormatter stringFromDate:date] lowercaseString];
     return (nameOfMonth.length > 3) ? [[nameOfMonth substringToIndex:3] stringByAppendingString:@"."] : nameOfMonth;
 }
 
 - (NSString *)fullStringMonth:(NSInteger)month {
-    static dispatch_once_t onceToken;
-    once_token_debug = &onceToken;
-    dispatch_once(&onceToken, ^{
-        self.dateFormatter = [NSDateFormatter new];
-    });
-    [self.dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     
-    NSString *nameOfMonth = [self.dateFormatter standaloneMonthSymbols][month - 1];
+    NSString *nameOfMonth = [dateFormatter standaloneMonthSymbols][month - 1];
     return [nameOfMonth lowercaseString];
 }
 
