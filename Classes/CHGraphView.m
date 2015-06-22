@@ -13,6 +13,7 @@
 #import "CHGraphBottomMonth.h"
 
 static CGFloat const kDefaultBottomHeight = 60.0;
+static dispatch_once_t *once_token_debug;
 
 @interface CHGraphView ()
 
@@ -32,6 +33,7 @@ static CGFloat const kDefaultBottomHeight = 60.0;
 @property (nonatomic, assign) NSInteger countDays;
 @property (nonatomic, strong) UIView *monthView;
 @property (nonatomic, strong) NSMutableArray *bottomMonths;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @property (nonatomic, assign) CGFloat newWidth;
 @property (nonatomic, assign) CGFloat oldWidth;
@@ -49,6 +51,11 @@ static CGFloat const kDefaultBottomHeight = 60.0;
     if (self) {
         NSAssert(lines, @"CHGraphView: lines array cannot be nil!");
         self.lines = lines;
+        
+        // reset dispatch_once
+        if (once_token_debug) {
+            *once_token_debug = 0;
+        }
         
         [self saveAllDates];
         
@@ -325,6 +332,7 @@ static CGFloat const kDefaultBottomHeight = 60.0;
                 [self drawVerticalLinePath:bottomMonthsPath xCoordinate:bottomPoint.xCoorinate];
                 
                 static dispatch_once_t onceToken;
+                once_token_debug = &onceToken;
                 dispatch_once(&onceToken, ^{
                     
                     CHGraphBottomMonth *bottomMonth = [CHGraphBottomMonth new];
@@ -348,6 +356,7 @@ static CGFloat const kDefaultBottomHeight = 60.0;
                 [self drawVerticalLinePath:bottomMonthsPath xCoordinate:bottomPoint.xCoorinate];
                 
                 static dispatch_once_t onceToken;
+                once_token_debug = &onceToken;
                 dispatch_once(&onceToken, ^{
 
                     CHGraphBottomMonth *bottomMonth = [CHGraphBottomMonth new];
@@ -441,19 +450,27 @@ static CGFloat const kDefaultBottomHeight = 60.0;
 #pragma mark - Date Formatter
 
 - (NSString *)shortStringMonthFromDate:(NSDate *)date {
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    [dateFormatter setDateFormat:@"MMMM"];
+    static dispatch_once_t onceToken;
+    once_token_debug = &onceToken;
+    dispatch_once(&onceToken, ^{
+        self.dateFormatter = [NSDateFormatter new];
+    });
+    [self.dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    [self.dateFormatter setDateFormat:@"MMMM"];
     
-    NSString *nameOfMonth = [[dateFormatter stringFromDate:date] lowercaseString];
+    NSString *nameOfMonth = [[self.dateFormatter stringFromDate:date] lowercaseString];
     return (nameOfMonth.length > 3) ? [[nameOfMonth substringToIndex:3] stringByAppendingString:@"."] : nameOfMonth;
 }
 
 - (NSString *)fullStringMonth:(NSInteger)month {
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    static dispatch_once_t onceToken;
+    once_token_debug = &onceToken;
+    dispatch_once(&onceToken, ^{
+        self.dateFormatter = [NSDateFormatter new];
+    });
+    [self.dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     
-    NSString *nameOfMonth = [dateFormatter standaloneMonthSymbols][month - 1];
+    NSString *nameOfMonth = [self.dateFormatter standaloneMonthSymbols][month - 1];
     return [nameOfMonth lowercaseString];
 }
 

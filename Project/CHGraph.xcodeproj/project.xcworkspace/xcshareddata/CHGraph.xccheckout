@@ -7,32 +7,32 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>7AE3CD48-96C7-43A5-98E0-8961CE730801</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>CHGraph</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>57A1046FC4CA3C959C45F6D53F6FC4F0006B638C</key>
-		<string>https://bitbucket.org/OlegChulakovStudio/chgraph.git</string>
+		<key>FDABFD12ABF69B19C2D3C78786337A66E776B9A8</key>
+		<string>https://github.com/andreykorolenko/CHGraph</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Project/CHGraph.xcodeproj/project.xcworkspace</string>
+	<string>Project/CHGraph.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>57A1046FC4CA3C959C45F6D53F6FC4F0006B638C</key>
+		<key>FDABFD12ABF69B19C2D3C78786337A66E776B9A8</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://bitbucket.org/OlegChulakovStudio/chgraph.git</string>
+	<string>https://github.com/andreykorolenko/CHGraph</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>57A1046FC4CA3C959C45F6D53F6FC4F0006B638C</string>
+	<string>FDABFD12ABF69B19C2D3C78786337A66E776B9A8</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>57A1046FC4CA3C959C45F6D53F6FC4F0006B638C</string>
+			<string>FDABFD12ABF69B19C2D3C78786337A66E776B9A8</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CHGraph</string>
 		</dict>
