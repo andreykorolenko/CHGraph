@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CHGraph"
-  s.version      = "0.0.12"
+  s.version      = "0.0.13"
   s.summary      = "Library to create graphs."
 
   s.description  = <<-DESC

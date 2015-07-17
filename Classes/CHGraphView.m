@@ -253,21 +253,24 @@ static dispatch_once_t *once_token_debug;
     [self.bottomView.layer addSublayer:self.bottomDatesLayer];
     
     for (CHGraphBottomPoint *bottomPoint in self.bottomPoints) {
-        UIView *dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        bottomPoint.dateView = dateView;
-        [self.bottomDatesLayer addSublayer:dateView.layer];
         
-        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(dateView.frame), CGRectGetHeight(dateView.frame))];
-        dateLabel.font = [UIFont systemFontOfSize:12.0];
-        dateLabel.numberOfLines = 0;
-        dateLabel.textColor = [UIColor whiteColor];
-        
-        NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [currentCalendar components:NSCalendarUnitDay fromDate:bottomPoint.date];
-        dateLabel.text = [NSString stringWithFormat:@"%ld %@", (long)components.day, [self shortStringMonthFromDate:bottomPoint.date]];
-        
-        dateLabel.textAlignment = NSTextAlignmentCenter;
-        [dateView addSubview:dateLabel];
+        if (!bottomPoint.hidden) {
+            UIView *dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+            bottomPoint.dateView = dateView;
+            [self.bottomDatesLayer addSublayer:dateView.layer];
+            
+            UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(dateView.frame), CGRectGetHeight(dateView.frame))];
+            dateLabel.font = [UIFont systemFontOfSize:12.0];
+            dateLabel.numberOfLines = 0;
+            dateLabel.textColor = [UIColor whiteColor];
+            
+            NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+            NSDateComponents *components = [currentCalendar components:NSCalendarUnitDay fromDate:bottomPoint.date];
+            dateLabel.text = [NSString stringWithFormat:@"%ld %@", (long)components.day, [self shortStringMonthFromDate:bottomPoint.date]];
+            
+            dateLabel.textAlignment = NSTextAlignmentCenter;
+            [dateView addSubview:dateLabel];
+        }
     }
     
     // месяцы
@@ -419,17 +422,40 @@ static dispatch_once_t *once_token_debug;
     NSArray *datesArray = [NSArray arrayWithArray:datesSet.allObjects];
     datesArray = [datesArray sortedArrayUsingSelector:@selector(compare:)];
     
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    CHGraphBottomPoint *lastPoint = nil;
     NSMutableArray *bottomPoints = [NSMutableArray array];
     for (NSDate *date in datesArray) {
         CHGraphBottomPoint *point = [CHGraphBottomPoint new];
         point.date = date;
+        point.hidden = NO;
+        
+        // проверяем месяц, сравниваем с прошлой точкой
+        if (lastPoint) {
+            NSDateComponents *componentsLastDate = [gregorianCalendar components:NSCalendarUnitMonth | NSCalendarUnitYear fromDate:lastPoint.date];
+            NSDateComponents *componentsCurrentDate = [gregorianCalendar components:NSCalendarUnitMonth | NSCalendarUnitYear fromDate:point.date];
+            
+            // если месяцы разные
+            if (componentsLastDate.month != componentsCurrentDate.month) {
+                CHGraphBottomPoint *pointStartMonth = [CHGraphBottomPoint new];
+                NSDateComponents *components = [NSDateComponents new];
+                [components setDay:1];
+                [components setMonth:componentsCurrentDate.month];
+                [components setYear:componentsCurrentDate.year];
+                pointStartMonth.date = [gregorianCalendar dateFromComponents:components];
+                pointStartMonth.hidden = YES;
+                [bottomPoints addObject:pointStartMonth];
+            }
+        }
+        
         [bottomPoints addObject:point];
+        lastPoint = point;
     }
     
     self.bottomPoints = [NSArray arrayWithArray:bottomPoints];
     
     // узнаем количество дней в графике
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay fromDate:[datesArray firstObject] toDate:[datesArray lastObject] options:0];
     self.countDays = components.day;
 }

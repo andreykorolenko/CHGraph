@@ -14,5 +14,6 @@
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, assign) CGFloat xCoorinate;
 @property (nonatomic, strong) UIView *dateView;
+@property (nonatomic, assign) BOOL hidden;
 
 @end

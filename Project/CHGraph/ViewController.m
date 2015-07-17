@@ -41,17 +41,17 @@
     [components setYear:2015];
     NSDate *date3 = [currentCalendar dateFromComponents:components];
     
-    [components setDay:1];
+    [components setDay:25];
     [components setMonth:06];
     [components setYear:2015];
     NSDate *date4 = [currentCalendar dateFromComponents:components];
     
-    [components setDay:4];
+    [components setDay:27];
     [components setMonth:06];
     [components setYear:2015];
     NSDate *date5 = [currentCalendar dateFromComponents:components];
     
-    [components setDay:8];
+    [components setDay:29];
     [components setMonth:06];
     [components setYear:2015];
     NSDate *date6 = [currentCalendar dateFromComponents:components];
